@@ -1,11 +1,9 @@
 import tensorflow as tf
 
 import numpy as np
-
-# import matplotlib as mpl
-
-# import IPython.display as display
+import io
 import PIL.Image
+# import IPython.display as display
 
 url = 'https://storage.googleapis.com/download.tensorflow.org/example_images/YellowLabradorLooking_new.jpg'
 
@@ -22,26 +20,6 @@ def download(url, max_dim=None):
 def deprocess(img):
   img = 255*(img + 1.0)/2.0
   return tf.cast(img, tf.uint8)
-
-# Display an image
-# def show(img):
-#   display.display()
-
-
-# Downsizing the image makes it easier to work with.
-original_img = download(url, max_dim=500)
-# show()
-# display.display(display.HTML('Image cc-by: <a "href=https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg">Von.grzanka</a>'))
-# mpl.pyplot.imshow(PIL.Image.fromarray(np.array(original_img)))
-
-base_model = tf.keras.applications.InceptionV3(include_top=False, weights='imagenet')
-
-# Maximize the activations of these layers
-names = ['mixed3', 'mixed5']
-layers = [base_model.get_layer(name).output for name in names]
-
-# Create the feature extraction model
-dream_model = tf.keras.Model(inputs=base_model.input, outputs=layers)
 
 def calc_loss(img, model):
   # Pass forward the image through the model to retrieve the activations.
@@ -91,10 +69,9 @@ class DeepDream(tf.Module):
 
       return loss, img
 
-deepdream = DeepDream(dream_model)
-
-def run_deep_dream_simple(img, steps=100, step_size=0.01):
+def run_deep_dream_simple(deepdream, img, steps=100, step_size=0.01):
   # Convert from uint8 to the range expected by the model.
+  # img = tf.keras.applications.inception_v3(weights='DeepDream/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5').preprocess_input(img)
   img = tf.keras.applications.inception_v3.preprocess_input(img)
   img = tf.convert_to_tensor(img)
   step_size = tf.convert_to_tensor(step_size)
@@ -116,15 +93,46 @@ def run_deep_dream_simple(img, steps=100, step_size=0.01):
 
 
   result = deprocess(img)
-#   display.clear_output(wait=True)
+  # display.clear_output(wait=True)
 #   mpl.pyplot.imshow(result)
 
   return result
 
-def run_deep_dream_simple(img, steps=100, step_size=0.01):
-  dream_img = run_deep_dream_simple(img=original_img, 
+def deep_dream_simple(img_url, parameters):
+  base_deep_dream_model = tf.keras.applications.InceptionV3(include_top=False, weights='DeepDream/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5')
+
+  # Maximize the activations of these layers
+  names = ['mixed3', 'mixed5']
+  layers = [base_deep_dream_model.get_layer(name).output for name in names]
+
+  # Create the feature extraction model
+  dream_model = tf.keras.Model(inputs=base_deep_dream_model.input, outputs=layers)
+
+  deepdream = DeepDream(dream_model)
+
+
+
+
+
+
+
+  # Downsizing the image makes it easier to work with.
+  original_img = download(img_url, max_dim=500)
+  # show()
+  # display.display(display.HTML('Image cc-by: <a "href=https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg">Von.grzanka</a>'))
+  # mpl.pyplot.imshow(PIL.Image.fromarray(np.array(original_img)))
+  dream_img = run_deep_dream_simple(deepdream= deepdream,img=original_img, 
                                   steps=100, step_size=0.01)
+  image = PIL.Image.fromarray(np.array(dream_img))
+  # image = PIL.Image.fromarray(np.uint8(dream_img.numpy()*255))
+  # image = PIL.Image.fromarray(np.uint8((dream_img.numpy()*1/2+1)*255))
+  # PIL.Image(np.fromdream_img).show()
+  # image.show()
+  img_byte_arr = io.BytesIO()
+  image.save(img_byte_arr, format='PNG')
+  img_byte_arr = img_byte_arr.getvalue()
+  return img_byte_arr
   
 
-
+# deep_dream_simple()
 

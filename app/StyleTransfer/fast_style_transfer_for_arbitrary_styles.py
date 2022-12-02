@@ -161,7 +161,7 @@ def style_transfer(content_image_url, style_image_url, parameters):
   # image = Image.fromarray(stylized_image[0].numpy())
   # image = Image.fromarray(stylized_image[0].numpy(), mode="RGB")
 
-  image.save("StyleTransfer/output/output.png")
+  # image.save("StyleTransfer/output/output.png")
   
   # show_n([content_images[content_name], style_images[style_name], stylized_image],
   #       titles=['Original content image', 'Style image', 'Stylized image'])

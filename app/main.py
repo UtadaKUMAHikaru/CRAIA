@@ -2,8 +2,8 @@
 # https://python.plainenglish.io/python-fastapi-serving-images-mp3-files-etc-from-your-backend-for-beginners-a7aa6eaec2f8
 # 我先存文件系统，并且url，我自己存文件系统担心并发问题
 
-import os
-
+# import os
+from DeepDream.deep_dream import deep_dream_simple
 # print(os.getcwd())
 # os.chdir('/code/app')
 # print(os.getcwd())
@@ -15,7 +15,7 @@ from fastapi.responses import FileResponse
 from StyleTransfer.fast_style_transfer_for_arbitrary_styles import style_transfer
 import nest_asyncio
 # import uvicorn
-from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 
 
 nest_asyncio.apply()
@@ -69,6 +69,9 @@ async def generate(
     # torch.cuda.empty_cache()
     if strategyType == 1:
         img = style_transfer(content_image_url=pic1, style_image_url=pic2, parameters=parameter)
+    if strategyType == 2:
+        img = deep_dream_simple(img_url=pic1, parameters=parameter)
+ 
  
     # return FileResponse('StyleTransfer/output/output.png', media_type="image/png")
 
