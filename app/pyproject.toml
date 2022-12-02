@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "website"
+version = "0.1.0"
+description = ""
+authors = ["hirosue <12281163@bjtu.edu.cn>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = "^0.88.0"
+tensorflow = "2.1.0"
+tensorflow-hub = "^0.12.0"
+uvicorn = "^0.20.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

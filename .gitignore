@@ -1,0 +1,3 @@
+./app/StyleTransfer/style_images/*
+./app/StyleTransfer/magenta_arbitrary-image-stylization-v1-256_2/*
+./app/StyleTransfer/content_images/*
