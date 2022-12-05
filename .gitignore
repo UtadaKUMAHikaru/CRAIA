@@ -1,6 +1,5 @@
 ./app/StyleTransfer/style_images/*
-./app/StyleTransfer/magenta_arbitrary-image-stylization-v1-256_2/*
 ./app/StyleTransfer/content_images/*
+./app/StyleTransfer/magenta_arbitrary-image-stylization-v1-256_2/*
 app/DeepDream/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5
 app/TextToImage/models--CompVis--stable-diffusion-v1-4/*
-test_tftorch/*
