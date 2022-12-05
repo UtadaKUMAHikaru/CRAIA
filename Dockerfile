@@ -1,11 +1,17 @@
 # FROM python:3.10
 FROM clearlinux/numpy-mp
 FROM tensorflow/tensorflow
+# FROM pytorch/pytorch
 # FROM tiangolo/uvicorn-gunicorn-fastapi
 
 # COPY ./app /app
 
 COPY . /code
+# COPY ~/.cache/huggingface/diffusers/ /.cache/huggingface/diffusers/
+# COPY ~/.cache/huggingface/diffusers/ ~/.cache/huggingface/diffusers/
+# COPY /Users/chendeen/.cache/huggingface/diffusers/models--CompVis--stable-diffusion-v1-4/ ~/.cache/huggingface/diffusers/
+# COPY /Users/chendeen/.cache/huggingface/diffusers/models--CompVis--stable-diffusion-v1-4/snapshots/a304b1ab1b59dd6c3ba9c40705c29c6de4144096 /code
+
 
 RUN pip install --no-cache-dir --upgrade -r /code/app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 

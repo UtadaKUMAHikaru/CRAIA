@@ -1,0 +1,11 @@
+FROM continuumio/miniconda3
+
+# COPY ./app /app
+
+COPY test_tftorch/ /opt/conda/envs/test_tftorch/
+# COPY ~/.cache/huggingface/diffusers/ /.cache/huggingface/diffusers/
+# COPY ~/.cache/huggingface/diffusers/ ~/.cache/huggingface/diffusers/
+# COPY /Users/chendeen/.cache/huggingface/diffusers/models--CompVis--stable-diffusion-v1-4/ ~/.cache/huggingface/diffusers/
+# COPY /Users/chendeen/.cache/huggingface/diffusers/models--CompVis--stable-diffusion-v1-4/snapshots/a304b1ab1b59dd6c3ba9c40705c29c6de4144096 /code
+
+

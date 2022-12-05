@@ -12,7 +12,7 @@ from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, File, UploadFile, Form, BackgroundTasks
 from fastapi.responses import FileResponse
-from StyleTransfer.fast_style_transfer_for_arbitrary_styles import style_transfer
+from StyleTransfer.fast_style_transfer_for_arbitrary_styles import style_transfer_simple
 import nest_asyncio
 # import uvicorn
 # from fastapi.staticfiles import StaticFiles
@@ -68,9 +68,11 @@ async def generate(
 
     # torch.cuda.empty_cache()
     if strategyType == 1:
-        img = style_transfer(content_image_url=pic1, style_image_url=pic2, parameters=parameter)
-    if strategyType == 2:
+        img = style_transfer_simple(content_image_url=pic1, style_image_url=pic2, parameters=parameter)
+    elif strategyType == 2:
         img = deep_dream_simple(img_url=pic1, parameters=parameter)
+    elif strategyType == 3:
+        img = text_to_image_simple(text=textDes,init_img=pic1, parameters=parameter)
  
  
     # return FileResponse('StyleTransfer/output/output.png', media_type="image/png")

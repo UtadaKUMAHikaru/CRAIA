@@ -129,7 +129,7 @@ hub_handle = 'StyleTransfer/magenta_arbitrary-image-stylization-v1-256_2'
 # hub_handle = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
 hub_module = hub.load(hub_handle)
 
-def style_transfer(content_image_url, style_image_url, parameters):
+def style_transfer_simple(content_image_url, style_image_url, parameters):
   
 
   content_image_size = 384
